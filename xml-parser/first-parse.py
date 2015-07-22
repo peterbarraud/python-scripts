@@ -12,7 +12,7 @@ classElements = root.findall(".//*[@class]")
 for classElement in classElements :
 	print classElement.tag	#tag name
 	print classElement.attrib["class"]	#class attrib value
-	#TODO: Remove attribues
+	#TODO: Remove attribues of a given name. eg: remove class attribute
 	
 #write back
 tree.write("test-file-writeback.xml")
