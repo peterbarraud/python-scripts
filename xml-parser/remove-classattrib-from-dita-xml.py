@@ -27,7 +27,7 @@ def writechanges (tree,filename) :
 		f.close()
 
 
-xmlfiles = glob.glob('C:/aaWork/p4v_ws/theoden/depot/EN/Docs/TechComm Suite/2015/rh/user-guide/*.xml')
+xmlfiles = glob.glob('C:/aaWork/p4v_ws/theoden/depot/EN/Docs/TechComm Suite/2015/fm/scripting/*.xml')
 for xmlfile in xmlfiles :
 	print xmlfile
 	tree = ElementTree.parse(xmlfile)	#load the xml document
@@ -37,6 +37,9 @@ for xmlfile in xmlfiles :
 		if 'class' in classElement.attrib :
 			del classElement.attrib['class']
 		iteratetree(classElement)
-	writechanges(tree,xmlfile)
+	try :
+		writechanges(tree,xmlfile)
+	except:
+		print sys.exc_info()[0]
 
 print "done"

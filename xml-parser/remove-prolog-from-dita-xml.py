@@ -29,7 +29,7 @@ def writechanges (tree,filename) :
 
 
 
-xmlfiles = glob.glob('C:/aaWork/p4v_ws/theoden/depot/EN/Docs/TechComm Suite/2015/rh/user-guide/*.xml')
+xmlfiles = glob.glob('C:/aaWork/p4v_ws/theoden/depot/EN/Docs/TechComm Suite/2015/fm/scripting/*.xml')
 for xmlfile in xmlfiles :
 	print xmlfile
 	tree = ET.parse(xmlfile)	#load the xml document
@@ -38,8 +38,11 @@ for xmlfile in xmlfiles :
 	for classElement in classElements :
 		if classElement.tag == 'prolog' :
 			root.remove(classElement)
-			#print classElement.tag	#tag name
 		iteratetree(classElement)
-	writechanges(tree,xmlfile)
+	try :
+		writechanges(tree,xmlfile)
+	except:
+		print sys.exc_info()[0]
+		
 
 print "done"
