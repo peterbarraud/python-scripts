@@ -1,7 +1,7 @@
-#!c:/Python27/python.exe
+#!c:/Python34/python.exe
 #execute this file on the bash prompt with: chmod +x first-parse.py && first-parse.py
 
-import xml.etree.ElementTree as ElementTree
+from xmldom import getxmltree
 import glob
 import os
 import sys
@@ -11,6 +11,8 @@ def iteratetree (currentelement) :
 	for classElement in classElements :
 		if iselementempty(classElement) :
 			currentelement.remove(classElement)
+			global changedmade
+			changedmade = changedmade + 1
 		iteratetree(classElement)
 
 def writechanges (tree,filename) :
@@ -31,15 +33,21 @@ def iselementempty(element) :
 		
 
 xmlfiles = glob.glob('C:/aaWork/p4v_ws/theoden/depot/EN/Docs/TechComm Suite/2015/rh/user-guide/*.xml')
+changedmade = 0
 for xmlfile in xmlfiles :
-	print xmlfile
-	tree = ElementTree.parse(xmlfile)	#load the xml document
-	root = tree.getroot()	#get the xml dom
+	print (xmlfile)
+	tree = getxmltree(xmlfile)
+	root = tree.getroot() #get the xml dom
 	classElements = root.findall("*")
+	changedmade = 0
 	for classElement in classElements :
 		if iselementempty(classElement) :
 			root.remove(classElement)
+			changedmade = changedmade + 1
 		iteratetree(classElement)
-	writechanges(tree,xmlfile + 'new')
+	if changedmade > 0:
+		writechanges(tree,xmlfile + 'new')
+	else :
+		print ('not change made')
 
-print "done"
+print ("done")
