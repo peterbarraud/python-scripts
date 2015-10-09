@@ -43,7 +43,7 @@ def checklink (xrefelement) :
 				logerrormessage('filenotfound',file_path,getxreftext(xrefelement))
 		if topics != None :
 			if len(topics) == 0 :
-				logerrormessage('link',getxreftext(xrefelement))
+				logerrormessage('linkbreak',getxreftext(xrefelement),"Pointing to:\n" + parts[1])
 			elif len(topics) > 1 :
 				logerrormessage('mulitpleids',parts[1])
 			elif len(topics) == 1:	#if links are fine, the check for sticky text
@@ -68,7 +68,7 @@ def logerrormessage(errtype,*othermessages) :
 	global NoOfLinkErrors
 	global NoOfTextErrors
 	NoOfErrors = NoOfErrors + 1
-	if errtype == 'link':
+	if errtype == 'linkbreak':
 		logger.WriteLine('Link break')
 		NoOfLinkErrors = NoOfLinkErrors + 1
 	elif errtype == 'stickytext' :
@@ -97,9 +97,7 @@ def iteratetree (currentelement) :
 		checkhref(classElement)
 		iteratetree(classElement)
 
-
 foldername = 'C:/aaWork/p4v_ws/theoden/depot/EN/Docs/TechComm Suite/2015/fm/scripting/'
-
 
 xmlfiles = glob.glob(foldername + '*.xml')
 root = None
