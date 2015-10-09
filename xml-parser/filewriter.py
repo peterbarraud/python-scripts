@@ -14,5 +14,7 @@ class FileWriter:
         self.target.write(content)
     def WriteLine(self,content):
         self.target.write (content + "\n")
+    def LineSeparator (self):
+        self.WriteLine('================================================')
     def LogFileName(self):
         return self.filename
